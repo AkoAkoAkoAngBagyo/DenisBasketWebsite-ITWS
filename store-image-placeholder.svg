@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title description">
+  <title id="title">Store image placeholder</title>
+  <desc id="description">A neutral placeholder indicating where to add a store photo.</desc>
+  <rect width="1200" height="560" fill="#eef2ed"/>
+  <rect x="3" y="3" width="1194" height="554" rx="18" fill="none" stroke="#a3b8a8" stroke-dasharray="18 14" stroke-width="6"/>
+  <rect x="494" y="158" width="212" height="162" rx="18" fill="#dbe5dc"/>
+  <circle cx="640" cy="210" r="24" fill="#a3b8a8"/>
+  <path d="m513 300 67-70 44 43 31-31 34 58z" fill="#a3b8a8"/>
+  <text x="600" y="390" fill="#536c57" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="600" text-anchor="middle">Your store image goes here</text>
+</svg>

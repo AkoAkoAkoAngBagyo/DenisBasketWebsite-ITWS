@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Denis' Basket - Information Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER / NAVIGATION -->
+    <header>
+        <div class="brand-container">
+            <!-- Logo Placeholder (Replace with <img src="logo.png" alt="Dennis' Basket Logo" class="brand-logo"> when ready) -->
+            <div class="logo-placeholder">LOGO</div>
+            <h1>Dennis' Basket</h1>
+        </div>
+        <nav>
+            <button onclick="changePage('home')">Home</button>
+            <button onclick="changePage('categories')">Categories</button>
+            <button onclick="changePage('about')">About Us</button>
+            <button onclick="changePage('contact')">Contact Us</button>
+            <button onclick="checkAdminAccess()" class="admin-tab">Admin Panel</button>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT VIEW CONTAINER -->
+    <main>
+        <!-- HOME PAGE -->
+        <section id="homePage" class="page-view">
+            <div class="hero-split-container">
+                <!-- Left Text Side -->
+                <div class="hero-text-side">
+                    <span class="hero-subtitle">YOUR NEIGHBORHOOD STORE</span>
+                    <h2 class="hero-title">Everyday essentials, closer to home.</h2>
+                    <p class="hero-desc">Explore available groceries, discover prices, and check product information before visiting Dennis' Basket.</p>
+                    
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="changePage('categories')">Browse Products</button>
+                    </div>
+                </div>
+
+                <!-- Right Photo Card Side -->
+                <div class="hero-card-side">
+                    <img src="Images/Front_Store_Image.jpg" alt="Dennis' Basket storefront" class="hero-image">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Three Feature Cards -->
+            <div class="feature-cards-grid">
+                <div class="feature-card">
+                    <h4>Quality Essentials</h4>
+                    <p>Explore everyday grocery and household products.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Transparent Prices</h4>
+                    <p>View sample prices and stock information.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Visit Our Store</h4>
+                    <p>Browse online, then shop in person.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES PAGE -->
+        <section id="categoriesPage" class="page-view" style="display:none;">
+            <h2>Product Categories & Items</h2>
+            <p>Browse available products across our store sections by selecting a category below.</p>
+            
+            <div id="categoryFilters" class="filter-buttons"></div>
+            <div id="categoriesGrid" class="product-grid"></div>
+        </section>
+
+      <!-- ABOUT US PAGE -->
+        <section id="aboutPage" class="page-view" style="display:none;">
+            <h2>About Us</h2>
+            
+            <div class="hero-split-container">
+                <!-- Left Text Side -->
+                <div class="hero-text-side">
+                    <span class="hero-subtitle">VISIT OUR LOCATION</span>
+                    <h3 style="color: var(--primary-green); margin-top: 5px; font-size: 22px;">Your Friendly Neighborhood Store</h3>
+                    <p class="hero-desc">Welcome to Dennis' Basket, your friendly neighborhood go-to for everyday household needs, 
+                        fresh essentials, and quick grab-and-go snacks. Conveniently located right where you need us, we make daily 
+                        shopping easy, accessible, and reliable for everyone in the community.</p>
+                    <p class="hero-desc">Whether you're stocking up on pantry staples, grabbing cleaning supplies, or picking up 
+                        household necessities, Dennis' Basket is committed to bringing you quality goods at clear, honest prices.</p>
+                    
+                    <a href="https://maps.google.com" target="_blank" class="maps-link">View Our Location on Google Maps</a>
+                </div>
+
+                <!-- Right Photo / Map Side -->
+                <div class="hero-card-side">
+                    <img src="Images/Store_Location.png" alt="Dennis' Basket store location" class="hero-image">
+                        <small>Drop by our physical store location today!</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT US PAGE -->
+        <section id="contactPage" class="page-view" style="display:none;">
+            <h2>Contact Us</h2>
+            <p>Have questions, feedback, or special product inquiries? Reach out to our store team below.</p>
+            <form id="contactForm" onsubmit="handleContact(event)">
+                <label for="cName">Your Name:</label>
+                <input type="text" id="cName" required>
+                
+                <label for="cEmail">Your Email:</label>
+                <input type="email" id="cEmail" required>
+                
+                <label for="cMsg">Message:</label>
+                <textarea id="cMsg" rows="4" required></textarea>
+                
+                <button type="submit">Send Message</button>
+            </form>
+            <p id="contactFeedback" style="color: #2d5a27; font-weight: bold; margin-top: 10px;"></p>
+        </section>
+
+        <!-- ADMIN LOGIN MODAL / SECTION -->
+        <section id="adminLoginModal" class="page-view" style="display:none;">
+            <h2>Admin Password Required</h2>
+            <p>Please enter the admin passcode to access inventory management and customer feedback.</p>
+            <p>Complete the lyric snippet (wow snippet) to get the password for the admin panel: help, I'm still at the _______</p>
+            <form id="loginForm" onsubmit="handleAdminLogin(event)">
+                <label for="adminPass">Admin Password:</label>
+                <input type="password" id="adminPass" placeholder="Enter password (must be all lowercase)" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" style="color: #d9534f; font-weight: bold; margin-top: 10px;"></p>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section id="adminPage" class="page-view" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e3ebd8; padding-bottom: 8px; margin-bottom: 20px;">
+                <h2 style="border: none; margin: 0; padding: 0;">Admin Dashboard</h2>
+                <button onclick="adminLogout()" class="filter-btn" style="background-color: #d9534f; color: white; border: none;">Logout</button>
+            </div>
+
+            <!-- Tabs inside Admin Panel -->
+            <div class="filter-buttons" style="margin-bottom: 20px;">
+                <button class="filter-btn active" onclick="switchAdminTab('inventory')" id="invTabBtn">Manage Inventory</button>
+                <button class="filter-btn" onclick="switchAdminTab('inbox')" id="inboxTabBtn">Customer Feedback Inbox (<span id="inboxCount">0</span>)</button>
+            </div>
+
+            <!-- TAB 1: INVENTORY -->
+            <div id="adminInventoryTab">
+                <h3>Add New Item</h3>
+                <form id="addItemForm" onsubmit="addNewItem(event)">
+                    <label for="itemName">Product Name:</label>
+                    <input type="text" id="itemName" placeholder="e.g., Fundador Special" required>
+                    
+                    <label for="itemCategory">Category:</label>
+                    <select id="itemCategory" required>
+                        <option value="Cigarettes">Cigarettes</option>
+                        <option value="Plasticware & Food Containers">Plasticware & Food Containers</option>
+                        <option value="Canned Goods">Canned Goods</option>
+                        <option value="Condiments & Cooking Ingredients">Condiments & Cooking Ingredients</option>
+                        <option value="Cooking Oil">Cooking Oil</option>
+                        <option value="Instant Noodles & Pasta">Instant Noodles & Pasta</option>
+                        <option value="Coffee, Chocolate & Energy Drinks">Coffee, Chocolate & Energy Drinks</option>
+                        <option value="Milk & Dairy Products">Milk & Dairy Products</option>
+                        <option value="Juice & Beverages">Juice & Beverages</option>
+                        <option value="Baking & Dessert Ingredients">Baking & Dessert Ingredients</option>
+                        <option value="Toiletries & Personal Care">Toiletries & Personal Care</option>
+                        <option value="Laundry & Household Cleaning Supplies">Laundry & Household Cleaning Supplies</option>
+                        <option value="Household Essentials">Household Essentials</option>
+                        <option value="Alcoholic Beverages">Alcoholic Beverages</option>
+                    </select>
+                    
+                    <label for="itemPrice">Price (₱):</label>
+                    <input type="number" id="itemPrice" step="0.5" placeholder="0.00" required>
+                    
+                    <label for="itemUnit">Unit / Packaging:</label>
+                    <input type="text" id="itemUnit" placeholder="e.g., bottle, kilo, pack" required>
+
+                    <label for="itemStock">Stock Amount:</label>
+                    <input type="number" id="itemStock" placeholder="Quantity" required>
+                    
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
+
+            <!-- TAB 2: INBOX -->
+            <div id="adminInboxTab" style="display:none;">
+                <h3>Customer Messages & Feedback</h3>
+                <div id="messagesContainer" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <!-- Dynamically populated customer messages -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Dennis' Basket. All rights reserved. | Physical Store Information Portal</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

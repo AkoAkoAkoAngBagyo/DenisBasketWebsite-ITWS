@@ -1,0 +1,499 @@
+/* ==========================================================================
+   COLOR PALETTE & CSS VARIABLES
+   ========================================================================== */
+:root {
+    --primary-green: #2d5a27;
+    --hover-green: #3d7335;
+    --accent-sage: #e3ebd8;
+    --bg-cream: #f8f6f0;
+    --card-bg: #ffffff;
+    --text-dark: #2c3e2e;
+    --text-muted: #5a6e5d;
+    --border-color: #dcd6cd;
+    --shadow-soft: 0 4px 12px rgba(45, 90, 39, 0.08);
+    --shadow-hover: 0 8px 20px rgba(45, 90, 39, 0.15);
+    --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ==========================================================================
+   GLOBAL BASE STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   HEADER & LOGO STYLING
+   ========================================================================== */
+header {
+    background: linear-gradient(135deg, var(--primary-green), #1b3d17);
+    color: white;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Logo Placeholder Styling */
+.logo-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+/* Actual Logo Image Styling (when you add your logo file later) */
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+nav button {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 9px 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+nav button:hover {
+    background-color: white;
+    color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   MAIN CONTAINER & CARD CONTENT
+   ========================================================================== */
+main {
+    max-width: 1050px;
+    margin: 40px auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(220, 214, 205, 0.5);
+}
+
+h2 {
+    color: var(--primary-green);
+    border-bottom: 3px solid var(--accent-sage);
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Storefront Image Placeholder Styling */
+.storefront-hero-container {
+    margin: 25px 0;
+    text-align: center;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+}
+
+.storefront-image {
+    width: 75%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.storefront-placeholder {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(135deg, #e5ebe6, #d2dfd4);
+    border: 2px dashed #93b397;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.storefront-placeholder:hover {
+    background: linear-gradient(135deg, #dbe4dc, #c6d6c8);
+}
+
+.storefront-hero-container figcaption {
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.hero-box {
+    background-color: var(--accent-sage);
+    padding: 22px;
+    border-radius: 8px;
+    margin-top: 25px;
+    text-align: center;
+    border-left: 5px solid var(--primary-green);
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   CATEGORY FILTERS & PRODUCT CARDS GRID
+   ========================================================================== */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 30px 0;
+}
+
+.filter-btn {
+    background-color: #f0f5eb;
+    color: var(--primary-green);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background-color: var(--accent-sage);
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-green);
+    color: white;
+    border-color: var(--primary-green);
+    box-shadow: 0 3px 8px rgba(45, 90, 39, 0.2);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.product-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: #b5cca5;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(135deg, #f2f5f1, #e3ebd8);
+    border: 1px dashed #a3b8a8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.product-image.olive-oil-image {
+    width: 65%;
+    height: 130px;
+    object-fit: contain;
+    align-self: center;
+}
+
+/* ==========================================================================
+   FORM STYLING
+   ========================================================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 520px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+input, select, textarea {
+    padding: 11px 14px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.12);
+}
+
+button[type="submit"] {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--hover-green);
+    box-shadow: 0 4px 10px rgba(45, 90, 39, 0.25);
+}
+
+/* ==========================================================================
+   FOOTER STYLING
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+/* ==========================================================================
+   HERO SPLIT LAYOUT STYLING
+   ========================================================================== */
+/* Split Layout for Hero & About Us */
+.hero-split-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Styled Link for Google Maps */
+.maps-link {
+    display: inline-block;
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
+.maps-link:hover {
+    color: var(--hover-green);
+}
+
+/* Right Card Box */
+.storefront-card-placeholder {
+    background-color: #dbe4dc;
+    border: 1px solid #c2d4b2;
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: #4a664e;
+}
+
+.hero-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin: 12px 0 16px 0;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.hero-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--hover-green);
+}
+
+.btn-secondary {
+    background-color: #e5ebe6;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #d2dfd4;
+}
+
+/* Right Photo Card Box */
+.storefront-card-placeholder {
+    background-color: #dbe4dc;
+    border: 1px solid #c2d4b2;
+    border-radius: 14px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: #4a664e;
+    box-shadow: 0 4px 12px rgba(45, 90, 39, 0.05);
+}
+
+.storefront-card-placeholder span {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.storefront-card-placeholder small {
+    font-size: 12px;
+    color: #6a856e;
+}
+
+/* Bottom Three Feature Cards */
+.feature-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.feature-card h4 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+.feature-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
