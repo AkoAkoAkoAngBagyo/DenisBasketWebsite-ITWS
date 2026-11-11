@@ -265,6 +265,15 @@ function renderCategoriesGrid() {
         12: 'images/Winston_Red_Rim.jpg',
         13: 'images/Winston_Lights.png',
         14: 'images/Winston_Lights_Rim.jpg',
+        15: 'images/Tupperware_Small.png',
+        16: 'images/Tupperware_Medium.png',
+        17: 'images/Tupperware_Large.png',
+        18: 'images/Plastic_Labo.jpeg',
+        19: 'images/Plastic_Labo.jpeg',
+        20: 'images/Plastic_Bag.jpg',
+        21: 'images/Plastic_Bag.jpg',
+        22: 'images/Plastic_Bag.jpg',
+        23: 'images/San_Marino_Flat.jpg',
         24: 'images/San_Marino_Flat.jpg',
         25: 'images/Normal_San_Marino.jpg',
         26: 'images/Tuna_Small.png',
@@ -287,27 +296,27 @@ function renderCategoriesGrid() {
         43: 'images/Silver_Swan_Small.png',
         44: 'images/Silwer_Swan_Small.webp',
         45: 'images/Silver_Swan_Gallon.jpg',
-        47: 'images/Ground_Pepper.jpg',
+        47: 'images/Whole_Pepper.jpg',
         48: 'images/Laurel.webp',
         49: 'images/Iodized_Salt.jpg',
-        76: 'images/Pineapple_Juice.jpg',
-        53: 'images/Maya_Cake_Flour.jpg',
-        54: 'images/Baking_Soda.jpg',
-        55: 'images/Cream_Pure_Cornstrach.webp',
-        64: 'images/Milo.png',
-        65: 'images/Energen.jpeg',
-        66: 'images/Kopiko.jpg',
-        67: 'images/Great_Taste.jpeg',
         50: 'images/Victoria_Sugar.jpg',
         51: 'images/Victoria_Brown_Sugar.jpg',
         52: 'images/Victoria_Washed_Sugar.jpg',
+        53: 'images/Maya_Cake_Flour.jpg',
+        54: 'images/Baking_Soda.jpg',
+        55: 'images/Cream_Pure_Cornstrach.webp',
         56: 'images/Local_Cooking_Oil.jpg',
+        57: 'images/Extra_Virgin_Olive_Oil.png',
         58: 'images/Golden_Fiesta_Oil.webp',
         59: 'images/Lucky_Me_Pancit_Canton.jpeg',
         60: 'images/Extra_Big_Pancit_Canton.jpg',
         61: 'images/Nissin_Ramen.jpeg',
         62: 'images/Lucky_Me_Chicken.jpeg',
         63: 'images/Lucky_Me_Beef.jpeg',
+        64: 'images/Milo.png',
+        65: 'images/Energen.jpeg',
+        66: 'images/Kopiko.jpg',
+        67: 'images/Great_Taste.jpeg',
         68: 'images/Alaska_Evaporated.jpg',
         69: 'images/Alaska_Condensada.jpg',
         70: 'images/Cow_Bell_Evaporated.png',
@@ -316,12 +325,17 @@ function renderCategoriesGrid() {
         73: 'images/Cowbell_Consedensarap.jpg',
         74: 'images/Cowbell_Consedensarap.jpg',
         75: 'images/Cowbell_Consedensarap.jpg',
+        76: 'images/Pineapple_Juice.jpg',
+        77: 'images/Food_Coloring.jpg',
+        78: 'images/Gelatin_Mix.jpg',
+        79: 'images/Graham_Crackers.webp',
         80: 'images/Colgate_Big.jpg',
         81: 'images/Colgate_Pack.jpg',
         82: 'images/Colgate_Twinpack.jpeg',
         83: 'images/Hapee_Big.jpg',
         84: 'images/Hapee_Big.webp',
         85: 'images/Close_Up_Big.jpg',
+        86: 'images/Close_Dozen.jpg',
         87: 'images/Close_Up_Twinpack.jpeg',
         88: 'images/Oralb_Toothbrush.jpg',
         89: 'images/Palmolive_Shampoo.webp',
@@ -347,22 +361,9 @@ function renderCategoriesGrid() {
         109: 'images/Ginebra_Box.jpg',
         110: 'images/Empirador_Single.jpg',
         111: 'images/Empirador_Double.jpg',
-        112: 'Images/Alfonso_Single.jpg',
-        113: 'Images/Alfonso_Box.jpg',
-        114: 'Images/Fundador_Specia.webp',
-        15: 'Images/Tupperware_Small.png',
-        16: 'Images/Tupperware_Medium.png',
-        17: 'Images/Tupperware_Large.png',
-        18: 'Images/Plastic_Labo.jpeg',
-        19: 'Images/Plastic_Labo.jpeg',
-        20: 'Images/Plastic_Bag.jpg',
-        21: 'Images/Plastic_Bag.jpg',
-        22: 'Images/Plastic_Bag.jpg',
-        77: 'Images/Food_Coloring.jpg',
-        78: 'Images/Gelatin_Mix.jpg',
-        79: 'Images/Graham_Crackers.webp',
-        57: 'Images/Extra_Virgin_Olive_Oil.png',
-        86: 'Images/Close_Up_Big.jpg',
+        112: 'images/Alfonso_Single.jpg',
+        113: 'images/Alfonso_Box.jpg',
+        114: 'images/Fundador_Specia.webp'
     };
 
     itemsToDisplay.forEach(item => {
@@ -371,7 +372,7 @@ function renderCategoriesGrid() {
         const imagePath = productImagePaths[item.id] || `images/${item.id}.jpg`;
 
         card.innerHTML = `
-            <img src="${imagePath}" alt="${item.name}" class="product-image${item.id === 57 ? ' olive-oil-image' : ''}" onerror="this.onerror=null; this.src='images/default.jpg';">
+            <img src="${imagePath}" alt="${item.name}" class="product-image${item.id === 57 ? ' olive-oil-image' : ''}" onerror="this.onerror=null; this.src='images/Front_Store_Image.jpg';">
             <h4 style="margin:5px 0; color:#2d5a27;">${item.name}</h4>
             <p style="margin:2px 0; font-size:12px; color:#555;">Category: <strong>${item.category}</strong></p>
             <p style="margin:2px 0; font-size:13px; color:#2d5a27;"><strong>₱${item.price.toFixed(2)}</strong> / ${item.unit}</p>
@@ -440,7 +441,7 @@ function renderInboxMessages() {
                 <span>${msg.date}</span>
             </div>
             <p style="margin: 0; color: #2b2b2b; font-size: 14px;">${msg.message}</p>
-            <button onclick="deleteMessage(${msg.id})" style="margin-top: 10px; background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete Message</button>
+            <button onclick="deleteMessage(${msg.id})" style="margin-top: 10px; background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete</button>
         `;
         container.appendChild(msgBox);
     });
