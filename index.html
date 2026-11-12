@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Dennis' Basket - Information Portal</title>
+    <link rel="icon" type="image/png" href="images/DennisBasket_Logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER / NAVIGATION -->
     <header>
         <div class="brand-container">
-            <!-- Logo Placeholder (Replace with <img src="logo.png" alt="Dennis' Basket Logo" class="brand-logo"> when ready) -->
-            <div class="logo-placeholder">LOGO</div>
+            <img src="images/DennisBasket_Logo.png" alt="Dennis' Basket Logo" class="brand-logo">
             <h1>Dennis' Basket</h1>
         </div>
         <nav>
@@ -23,47 +22,42 @@
         </nav>
     </header>
 
-    <!-- MAIN CONTENT VIEW CONTAINER -->
     <main>
-        <!-- HOME PAGE -->
         <section id="homePage" class="page-view">
-            <div class="hero-split-container">
-                <!-- Left Text Side -->
-                <div class="hero-text-side">
-                    <span class="hero-subtitle">YOUR NEIGHBORHOOD STORE</span>
-                    <h2 class="hero-title">Everyday essentials, closer to home.</h2>
-                    <p class="hero-desc">Explore available groceries, discover prices, and check product information before visiting Dennis' Basket.</p>
+            <div class="split-layout">
+                <div class="split-text">
+                    <span class="section-label">YOUR NEIGHBORHOOD STORE</span>
+                    <h2 class="section-title">Everyday essentials, closer to home.</h2>
+                    <p class="section-description">Explore available groceries, discover prices, and check product information before visiting Dennis' Basket.</p>
                     
-                    <div class="hero-buttons">
+                    <div class="button-group">
                         <button class="btn-primary" onclick="changePage('categories')">Browse Products</button>
                     </div>
                 </div>
 
-                <!-- Right Photo Card Side -->
-                <div class="hero-card-side">
-                    <img src="images/Front_Store_Image.jpg" alt="Dennis' Basket storefront" class="hero-image">
+
+                <div class="split-media">
+                    <img src="Images/Front_Store_Image.jpg" alt="Dennis' Basket storefront" class="content-image">
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Three Feature Cards -->
             <div class="feature-cards-grid">
                 <div class="feature-card">
                     <h4>Quality Essentials</h4>
-                    <p>Explore everyday grocery and household products.</p>
+                    <p>Explore quality products needed for your daily life at such competitive prices.</p>
                 </div>
                 <div class="feature-card">
                     <h4>Transparent Prices</h4>
-                    <p>View sample prices and stock information.</p>
+                    <p>View product prices and availability information at a glance.</p>
                 </div>
                 <div class="feature-card">
                     <h4>Visit Our Store</h4>
-                    <p>Browse online, then shop in person.</p>
+                    <p>You're free to browse online, then head on over to our physical location if you'd like to see products in person.</p>
                 </div>
             </div>
         </section>
 
-        <!-- CATEGORIES PAGE -->
         <section id="categoriesPage" class="page-view" style="display:none;">
             <h2>Product Categories & Items</h2>
             <p>Browse available products across our store sections by selecting a category below.</p>
@@ -72,37 +66,37 @@
             <div id="categoriesGrid" class="product-grid"></div>
         </section>
 
-      <!-- ABOUT US PAGE -->
         <section id="aboutPage" class="page-view" style="display:none;">
             <h2>About Us</h2>
             
-            <div class="hero-split-container">
-                <!-- Left Text Side -->
-                <div class="hero-text-side">
-                    <span class="hero-subtitle">VISIT OUR LOCATION</span>
+            <div class="split-layout">
+                <div class="split-text">
+                    <span class="section-label">VISIT OUR LOCATION</span>
                     <h3 style="color: var(--primary-green); margin-top: 5px; font-size: 22px;">Your Friendly Neighborhood Store</h3>
-                    <p class="hero-desc">Welcome to Dennis' Basket, your friendly neighborhood go-to for everyday household needs, 
+                    <p class="section-description">Welcome to Dennis' Basket, your friendly neighborhood go-to for everyday household needs, 
                         fresh essentials, and quick grab-and-go snacks. Conveniently located right where you need us, we make daily 
                         shopping easy, accessible, and reliable for everyone in the community.</p>
-                    <p class="hero-desc">Whether you're stocking up on pantry staples, grabbing cleaning supplies, or picking up 
+                    <p class="section-description">Whether you're stocking up on pantry staples, grabbing cleaning supplies, or picking up 
                         household necessities, Dennis' Basket is committed to bringing you quality goods at clear, honest prices.</p>
                     
                     <a href="https://maps.google.com" target="_blank" class="maps-link">View Our Location on Google Maps</a>
                 </div>
 
                 <!-- Right Photo / Map Side -->
-                <div class="hero-card-side">
-                    <img src="Images/Store_Location.png" alt="Dennis' Basket store location" class="hero-image">
+                <div class="split-media">
+                    <img src="Images/Store_Location.png" alt="Dennis' Basket store location" class="content-image">
                         <small>Drop by our physical store location today!</small>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CONTACT US PAGE -->
         <section id="contactPage" class="page-view" style="display:none;">
             <h2>Contact Us</h2>
-            <p>Have questions, feedback, or special product inquiries? Reach out to our store team below.</p>
+            <p>If you have any questions or feedback, please fill out the form below and we'll get back to you as soon as possible.
+                You can also inquire about product availability, pricing, or any other store-related concerns. We value your 
+                input and look forward to assisting you!
+            </p>
             <form id="contactForm" onsubmit="handleContact(event)">
                 <label for="cName">Your Name:</label>
                 <input type="text" id="cName" required>
@@ -118,7 +112,6 @@
             <p id="contactFeedback" style="color: #2d5a27; font-weight: bold; margin-top: 10px;"></p>
         </section>
 
-        <!-- ADMIN LOGIN MODAL / SECTION -->
         <section id="adminLoginModal" class="page-view" style="display:none;">
             <h2>Admin Password Required</h2>
             <p>Please enter the admin passcode to access inventory management and customer feedback.</p>
@@ -131,7 +124,6 @@
             <p id="loginError" style="color: #d9534f; font-weight: bold; margin-top: 10px;"></p>
         </section>
 
-        <!-- ADMIN PANEL -->
         <section id="adminPage" class="page-view" style="display:none;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e3ebd8; padding-bottom: 8px; margin-bottom: 20px;">
                 <h2 style="border: none; margin: 0; padding: 0;">Admin Dashboard</h2>
@@ -144,7 +136,6 @@
                 <button class="filter-btn" onclick="switchAdminTab('inbox')" id="inboxTabBtn">Customer Feedback Inbox (<span id="inboxCount">0</span>)</button>
             </div>
 
-            <!-- TAB 1: INVENTORY -->
             <div id="adminInventoryTab">
                 <h3>Add New Item</h3>
                 <form id="addItemForm" onsubmit="addNewItem(event)">
@@ -182,7 +173,6 @@
                 </form>
             </div>
 
-            <!-- TAB 2: INBOX -->
             <div id="adminInboxTab" style="display:none;">
                 <h3>Customer Messages & Feedback</h3>
                 <div id="messagesContainer" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
@@ -192,7 +182,6 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 Dennis' Basket. All rights reserved. | Physical Store Information Portal</p>
     </footer>
