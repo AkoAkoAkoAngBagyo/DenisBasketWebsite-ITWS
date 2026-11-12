@@ -428,7 +428,7 @@ function renderDailyDeals() {
                 <span style="font-size: 11.5px; color: #666;">/ ${product.unit}</span>
             </div>
             <p class="deal-condition">${deal.promoText}</p>
-            <p style="margin: 6px 0 0 0; font-size: 11.5px; color: #4a664e; font-weight: 600;">In-store pickup only • Stock: ${product.stock}</p>
+            <p style="margin: 6px 0 0 0; font-size: 11.5px; color: #4a664e; font-weight: 600;">Valid only for walk-ins• Stock: ${product.stock}</p>
         `;
         dealsGrid.appendChild(card);
     });
