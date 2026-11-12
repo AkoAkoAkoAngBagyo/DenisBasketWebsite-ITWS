@@ -21,7 +21,7 @@ let productList = JSON.parse(localStorage.getItem('denis_catalog')) || [
     { id: 17, name: "Tupperware Large (1000 ml)", category: "Plasticware & Food Containers", price: 65.00, unit: "pc (10 min/bundle)", stock: 80 },
     { id: 18, name: "Plastic Labo (Roll)", category: "Plasticware & Food Containers", price: 24.00, unit: "roll", stock: 50 },
     { id: 19, name: "Plastic Labo Normal Size (8x11)", category: "Plasticware & Food Containers", price: 12.00, unit: "pc", stock: 150 },
-    { id: 20, name: "Plastic Bags Small", category: "Plasticware & Food Containers", price: 110.00, unit: "1000 pcs", stock: 20 },
+    { id: 20, name: "Plastic Bags Small", category: "Plasticware & Food Containers", price: 110.00, unit: "1000 pcs", stock: 50 },
     { id: 21, name: "Plastic Bags Medium (Rooster Brand)", category: "Plasticware & Food Containers", price: 210.00, unit: "1000 pcs", stock: 15 },
     { id: 22, name: "Plastic Bags Large", category: "Plasticware & Food Containers", price: 360.00, unit: "1000 pcs", stock: 12 },
 
@@ -42,7 +42,7 @@ let productList = JSON.parse(localStorage.getItem('denis_catalog')) || [
     { id: 34, name: "Datu Puti Vinegar Budget Pack", category: "Condiments & Cooking Ingredients", price: 9.00, unit: "pack", stock: 100 },
     { id: 35, name: "Datu Puti Vinegar Bote", category: "Condiments & Cooking Ingredients", price: 19.00, unit: "bottle", stock: 80 },
     { id: 36, name: "Datu Puti Vinegar 1L", category: "Condiments & Cooking Ingredients", price: 45.00, unit: "bottle", stock: 50 },
-    { id: 37, name: "Datu Puti Vinegar Gallon", category: "Condiments & Cooking Ingredients", price: 170.00, unit: "gallon", stock: 12 },
+    { id: 37, name: "Datu Puti Vinegar Gallon", category: "Condiments & Cooking Ingredients", price: 170.00, unit: "gallon", stock: 27 },
     { id: 38, name: "Silver Swan Soy Sauce Budget Pack", category: "Condiments & Cooking Ingredients", price: 11.50, unit: "pack", stock: 90 },
     { id: 39, name: "Silver Swan Soy Sauce Bote", category: "Condiments & Cooking Ingredients", price: 21.00, unit: "bottle", stock: 70 },
     { id: 40, name: "Silver Swan Soy Sauce 1L", category: "Condiments & Cooking Ingredients", price: 55.00, unit: "bottle", stock: 40 },
