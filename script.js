@@ -1,4 +1,3 @@
-// Complete Supermarket Dataset from Listahan.txt for Dennis' Basket
 let productList = JSON.parse(localStorage.getItem('denis_catalog')) || [
     // 1. Cigarettes
     { id: 1, name: "Marlboro Red", category: "Cigarettes", price: 176.00, unit: "pack", stock: 50 },
