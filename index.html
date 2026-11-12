@@ -163,6 +163,11 @@
 
                     <label for="itemStock">Stock Amount:</label>
                     <input type="number" id="itemStock" placeholder="Quantity" required>
+
+                    <label for="itemImage">Product Image (optional):</label>
+                    <input type="file" id="itemImage" accept="image/*">
+                    <small>Image is resized and stored in this browser only; it will not sync to other devices.</small>
+                    <img id="itemImagePreview" alt="Selected product image preview" style="display:none; max-width:160px; max-height:160px; object-fit:contain; margin:8px 0;">
                     
                     <button type="submit">Add Product</button>
                 </form>
@@ -183,5 +188,6 @@
 
     <script src="script.js"></script>
     <script src="product-images.js"></script>
+    <script src="admin-product-images.js"></script>
 </body>
 </html>
