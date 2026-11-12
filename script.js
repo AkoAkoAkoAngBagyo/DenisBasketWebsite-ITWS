@@ -155,6 +155,7 @@ function changePage(pageName) {
 
     if (pageName === 'home') {
         document.getElementById('homePage').style.display = 'block';
+        renderDailyDeals(); // Automatically render daily deals when opening Home page
     } else if (pageName === 'categories') {
         document.getElementById('categoriesPage').style.display = 'block';
         renderCategoryFilters();
@@ -377,6 +378,64 @@ function renderCategoriesGrid() {
             <p style="margin:2px 0; font-size:12px; color:#777;">Stock: ${product.stock}</p>
         `;
         productGrid.appendChild(productCard);
+    });
+}
+
+function renderDailyDeals() {
+    const dealsGrid = document.getElementById('dailyDealsGrid');
+    if (!dealsGrid) return;
+    dealsGrid.innerHTML = "";
+
+    const featuredDeals = [
+        { 
+            id: 108, // Ginebra (Each)
+            discountLabel: "SPECIAL PROMO", 
+            promoText: "5% off when you buy 5 bottles"
+        },
+        { 
+            id: 110, // Emperador Double Light (Each)
+            discountLabel: "SPECIAL PROMO", 
+            promoText: "5% off when you buy 5 bottles"
+        },
+        { 
+            id: 23, // San Marino Tuna Flat (180g)
+            discountLabel: "SAVE ₱5", 
+            promoText: "Special discount on single cans"
+        },
+        { 
+            id: 59, // Pancit Canton
+            discountLabel: "BUNDLE DEAL", 
+            promoText: "Special bundle price"
+        }
+    ];
+
+    const productImages = {
+        23: 'images/Normal_San_Marino.jpg',
+        59: 'images/Lucky_Me_Pancit_Canton.jpeg',
+        108: 'images/Ginebra_Bottle.jpg',
+        110: 'images/Empirador_Single.jpg'
+    };
+
+    featuredDeals.forEach(deal => {
+        const product = productList.find(p => p.id === deal.id);
+        if (!product) return;
+
+        const productImagePath = productImages[product.id] || `images/${product.id}.jpg`;
+        const card = document.createElement('div');
+        card.className = 'deal-card';
+        card.innerHTML = `
+            <span class="deal-badge">${deal.discountLabel}</span>
+            <img src="${productImagePath}" alt="${product.name}" class="product-image" onerror="this.onerror=null; this.src='images/default.jpg';">
+            <h4 style="margin: 10px 0 4px 0; color: var(--text-dark); font-size: 15px;">${product.name}</h4>
+            <p style="margin: 0; font-size: 12px; color: var(--text-muted);">${product.category}</p>
+            <div class="deal-price-row" style="margin-top: 8px;">
+                <span class="deal-new-price">₱${product.price.toFixed(2)}</span>
+                <span style="font-size: 11.5px; color: #666;">/ ${product.unit}</span>
+            </div>
+            <p class="deal-condition">${deal.promoText}</p>
+            <p style="margin: 6px 0 0 0; font-size: 11.5px; color: #4a664e; font-weight: 600;">In-store pickup only • Stock: ${product.stock}</p>
+        `;
+        dealsGrid.appendChild(card);
     });
 }
 
