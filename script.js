@@ -1,5 +1,5 @@
 // Complete Supermarket Dataset from Listahan.txt for Dennis' Basket
-let catalogItems = JSON.parse(localStorage.getItem('denis_catalog')) || [
+let productList = JSON.parse(localStorage.getItem('denis_catalog')) || [
     // 1. Cigarettes
     { id: 1, name: "Marlboro Red", category: "Cigarettes", price: 176.00, unit: "pack", stock: 50 },
     { id: 2, name: "Marlboro Red (Rim)", category: "Cigarettes", price: 1760.00, unit: "rim (10 packs)", stock: 10 },
@@ -142,11 +142,11 @@ let catalogItems = JSON.parse(localStorage.getItem('denis_catalog')) || [
     { id: 114, name: "Fundador Special", category: "Alcoholic Beverages", price: 260.00, unit: "bottle", stock: 24 }
 ];
 
-let customerMessages = JSON.parse(localStorage.getItem('denis_messages')) || [];
-let selectedCategory = "All";
-let isAdminLoggedIn = false;
+let customerMessages = JSON.parse(localStorage.getItem('dennis_messages')) || [];
+let currentCategory = "All";
+let adminLogin = false;
 
-function changePage(pageId) {
+function changePage(pageName) {
     document.getElementById('homePage').style.display = 'none';
     document.getElementById('categoriesPage').style.display = 'none';
     document.getElementById('aboutPage').style.display = 'none';
@@ -154,37 +154,37 @@ function changePage(pageId) {
     document.getElementById('adminLoginModal').style.display = 'none';
     document.getElementById('adminPage').style.display = 'none';
 
-    if (pageId === 'home') {
+    if (pageName === 'home') {
         document.getElementById('homePage').style.display = 'block';
-    } else if (pageId === 'categories') {
+    } else if (pageName === 'categories') {
         document.getElementById('categoriesPage').style.display = 'block';
         renderCategoryFilters();
         renderCategoriesGrid();
-    } else if (pageId === 'about') {
+    } else if (pageName === 'about') {
         document.getElementById('aboutPage').style.display = 'block';
-    } else if (pageId === 'contact') {
+    } else if (pageName === 'contact') {
         document.getElementById('contactPage').style.display = 'block';
-    } else if (pageId === 'adminLogin') {
+    } else if (pageName === 'adminLogin') {
         document.getElementById('adminLoginModal').style.display = 'block';
-    } else if (pageId === 'adminDashboard') {
+    } else if (pageName === 'adminDashboard') {
         document.getElementById('adminPage').style.display = 'block';
         renderInboxMessages();
     }
 }
 
 function checkAdminAccess() {
-    if (isAdminLoggedIn) {
+    if (adminLogin) {
         changePage('adminDashboard');
     } else {
         changePage('adminLogin');
     }
 }
 
-function handleAdminLogin(event) {
-    event.preventDefault();
-    let pass = document.getElementById('adminPass').value;
-    if (pass === 'restaurant') {
-        isAdminLoggedIn = true;
+function handleAdminLogin(formEvent) {
+    formEvent.preventDefault();
+    let adminPassword = document.getElementById('adminPass').value;
+    if (adminPassword === 'restaurant') {
+        adminLogin = true;
         document.getElementById('loginError').textContent = "";
         document.getElementById('loginForm').reset();
         changePage('adminDashboard');
@@ -194,262 +194,261 @@ function handleAdminLogin(event) {
 }
 
 function adminLogout() {
-    isAdminLoggedIn = false;
+    adminLogin = false;
     alert("Logged out from Admin Panel securely.");
     changePage('home');
 }
 
-function switchAdminTab(tabName) {
-    const invTab = document.getElementById('adminInventoryTab');
+function switchAdminTab(selectedTab) {
+    const inventoryTab = document.getElementById('adminInventoryTab');
     const inboxTab = document.getElementById('adminInboxTab');
-    const invBtn = document.getElementById('invTabBtn');
-    const inboxBtn = document.getElementById('inboxTabBtn');
+    const inventoryButton = document.getElementById('invTabBtn');
+    const inboxButton = document.getElementById('inboxTabBtn');
 
-    if (tabName === 'inventory') {
-        invTab.style.display = 'block';
+    if (selectedTab === 'inventory') {
+        inventoryTab.style.display = 'block';
         inboxTab.style.display = 'none';
-        invBtn.classList.add('active');
-        inboxBtn.classList.remove('active');
+        inventoryButton.classList.add('active');
+        inboxButton.classList.remove('active');
     } else {
-        invTab.style.display = 'none';
+        inventoryTab.style.display = 'none';
         inboxTab.style.display = 'block';
-        inboxBtn.classList.add('active');
-        invBtn.classList.remove('active');
+        inboxButton.classList.add('active');
+        inventoryButton.classList.remove('active');
         renderInboxMessages();
     }
 }
 
 function renderCategoryFilters() {
-    const container = document.getElementById('categoryFilters');
-    const categories = ["All", ...new Set(catalogItems.map(item => item.category))];
+    const filterContainer = document.getElementById('categoryFilters');
+    const categoryList = ["All", ...new Set(productList.map(product => product.category))];
 
-    container.innerHTML = "";
-    categories.forEach(cat => {
-        let btn = document.createElement('button');
-        btn.className = `filter-btn ${cat === selectedCategory ? 'active' : ''}`;
-        btn.textContent = cat;
-        btn.onclick = function() {
-            selectedCategory = cat;
+    filterContainer.innerHTML = "";
+    categoryList.forEach(category => {
+        let filterButton = document.createElement('button');
+        filterButton.className = `filter-btn ${category === currentCategory ? 'active' : ''}`;
+        filterButton.textContent = category;
+        filterButton.onclick = function() {
+            currentCategory = category;
             renderCategoryFilters();
             renderCategoriesGrid();
         };
-        container.appendChild(btn);
+        filterContainer.appendChild(filterButton);
     });
 }
 
 function renderCategoriesGrid() {
-    const grid = document.getElementById('categoriesGrid');
-    grid.innerHTML = "";
+    const productGrid = document.getElementById('categoriesGrid');
+    productGrid.innerHTML = "";
 
-    let itemsToDisplay = selectedCategory === "All" 
-        ? catalogItems 
-        : catalogItems.filter(item => item.category === selectedCategory);
+    let displayProducts = currentCategory === "All" 
+        ? productList 
+        : productList.filter(product => product.category === currentCategory);
 
-    if (itemsToDisplay.length === 0) {
-        grid.innerHTML = "<p>No products available in this category.</p>";
+    if (displayProducts.length === 0) {
+        productGrid.innerHTML = "<p>No products available in this category.</p>";
         return;
     }
 
-    const productImagePaths = {
-        1: 'images/Marlboro_Red.jpg',
-        2: 'images/ItsNeverOver_Marlboro_Red_Rim.jpg',
-        3: 'images/Marlboro_Green.png',
-        4: 'images/Marlboro_Green_Rim.jpg',
-        5: 'images/Marlboro_Blue_Lights.webp',
-        6: 'images/Marlboro_Blue_Rim.jpg',
-        7: 'images/Fortune_Green.png',
-        8: 'images/Fortune_Green_Rim.jpg',
-        9: 'images/Fortune_Lights.png',
-        10: 'images/Fortune_Lights_Rim.jpg',
-        11: 'images/Winston_Red.jpeg',
-        12: 'images/Winston_Red_Rim.jpg',
-        13: 'images/Winston_Lights.png',
-        14: 'images/Winston_Lights_Rim.jpg',
-        15: 'images/Tupperware_Small.png',
-        16: 'images/Tupperware_Medium.png',
-        17: 'images/Tupperware_Large.png',
-        18: 'images/Plastic_Labo.jpeg',
-        19: 'images/Plastic_Labo.jpeg',
-        20: 'images/Plastic_Bag.jpg',
-        21: 'images/Plastic_Bag.jpg',
-        22: 'images/Plastic_Bag.jpg',
-        23: 'images/San_Marino_Flat.jpg',
-        24: 'images/San_Marino_Flat.jpg',
-        25: 'images/Normal_San_Marino.jpg',
-        26: 'images/Tuna_Small.png',
-        27: 'images/Century_Tuna.jpg',
-        28: 'images/Saba_Squid.jpg',
-        29: 'images/Mixed_Fruit.jpg',
-        30: 'images/Soy_Suave_Pack.png',
-        31: 'images/Soy_Sauce_Small.png',
-        32: 'images/Soy_Sauce_Big.jpeg',
-        33: 'images/Soy_Sauce_Gallon.jpeg',
-        34: 'images/Vinegar_Pack.jpg',
-        35: 'images/Vinegar_Small.png',
-        36: 'images/Vinegar_Big.webp',
-        37: 'images/Vinegar_Gallon.jpeg',
-        38: 'images/Silver_Swan_Soy_Pack.jpeg',
-        39: 'images/Silver_Swan_Soy_Small.webp',
-        40: 'images/Silver_Swan_Soy_Large.png',
-        41: 'images/Silver_Swan_Soy_Gallon.jpg',
-        42: 'images/Silver_Swan_Pack.jpeg',
-        43: 'images/Silver_Swan_Small.png',
-        44: 'images/Silwer_Swan_Small.webp',
-        45: 'images/Silver_Swan_Gallon.jpg',
-        47: 'images/Whole_Pepper.jpg',
-        48: 'images/Laurel.webp',
-        49: 'images/Iodized_Salt.jpg',
-        50: 'images/Victoria_Sugar.jpg',
-        51: 'images/Victoria_Brown_Sugar.jpg',
-        52: 'images/Victoria_Washed_Sugar.jpg',
-        53: 'images/Maya_Cake_Flour.jpg',
-        54: 'images/Baking_Soda.jpg',
-        55: 'images/Cream_Pure_Cornstrach.webp',
-        56: 'images/Local_Cooking_Oil.jpg',
-        57: 'images/Extra_Virgin_Olive_Oil.png',
-        58: 'images/Golden_Fiesta_Oil.webp',
-        59: 'images/Lucky_Me_Pancit_Canton.jpeg',
-        60: 'images/Extra_Big_Pancit_Canton.jpg',
-        61: 'images/Nissin_Ramen.jpeg',
-        62: 'images/Lucky_Me_Chicken.jpeg',
-        63: 'images/Lucky_Me_Beef.jpeg',
-        64: 'images/Milo.png',
-        65: 'images/Energen.jpeg',
-        66: 'images/Kopiko.jpg',
-        67: 'images/Great_Taste.jpeg',
-        68: 'images/Alaska_Evaporated.jpg',
-        69: 'images/Alaska_Condensada.jpg',
-        70: 'images/Cow_Bell_Evaporated.png',
-        71: 'images/Cow_Bell_Evaporated.png',
-        72: 'images/Cow_Bell_Evaporated.png',
-        73: 'images/Cowbell_Consedensarap.jpg',
-        74: 'images/Cowbell_Consedensarap.jpg',
-        75: 'images/Cowbell_Consedensarap.jpg',
-        76: 'images/Pineapple_Juice.jpg',
-        77: 'images/Food_Coloring.jpg',
-        78: 'images/Gelatin_Mix.jpg',
-        79: 'images/Graham_Crackers.webp',
-        80: 'images/Colgate_Big.jpg',
-        81: 'images/Colgate_Pack.jpg',
-        82: 'images/Colgate_Twinpack.jpeg',
-        83: 'images/Hapee_Big.jpg',
-        84: 'images/Hapee_Big.webp',
-        85: 'images/Close_Up_Big.jpg',
-        86: 'images/Close_Dozen.jpg',
-        87: 'images/Close_Up_Twinpack.jpeg',
-        88: 'images/Oralb_Toothbrush.jpg',
-        89: 'images/Palmolive_Shampoo.webp',
-        90: 'images/Pantene_Shampoo.webp',
-        91: 'images/Clear_Shampoo.webp',
-        92: 'images/Silka_Soap.jpg',
-        93: 'images/Kojic_Soap.jpg',
-        94: 'images/Safegaurd_Small.webp',
-        95: 'images/Safegaurd_Large.jpg',
-        96: 'images/Dove_Large.jpg',
-        97: 'images/Tide_Powder.webp',
-        98: 'images/Champion_Powder.jpg',
-        99: 'images/Surf_Powder.webp',
-        100: 'images/Breeze_Powder.webp',
-        101: 'images/Ariel_Powder.webp',
-        102: 'images/Champion_Bar_Soap.png',
-        103: 'images/Charcoal_Pack.jpg',
-        104: 'images/Bilao_12.png',
-        105: 'images/Bilao_14.png',
-        106: 'images/Bilao_16.png',
-        107: 'images/Bilao_18.png',
-        108: 'images/Ginebra_Bottle.jpg',
-        109: 'images/Ginebra_Box.jpg',
-        110: 'images/Empirador_Single.jpg',
-        111: 'images/Empirador_Double.jpg',
-        112: 'images/Alfonso_Single.jpg',
-        113: 'images/Alfonso_Box.jpg',
-        114: 'images/Fundador_Specia.webp'
+    const productImages = {
+        1: 'Images/Marlboro_Red.jpg',
+        2: 'Images/ItsNeverOver_Marlboro_Red_Rim.jpg',
+        3: 'Images/Marlboro_Green.png',
+        4: 'Images/Marlboro_Green_Rim.jpg',
+        5: 'Images/Marlboro_Blue_Lights.webp',
+        6: 'Images/Marlboro_Blue_Rim.jpg',
+        7: 'Images/Fortune_Green.png',
+        8: 'Images/Fortune_Green_Rim.jpg',
+        9: 'Images/Fortune_Lights.png',
+        10: 'Images/Fortune_Lights_Rim.jpg',
+        11: 'Images/Winston_Red.jpeg',
+        12: 'Images/Winston_Red_Rim.jpg',
+        13: 'Images/Winston_Lights.png',
+        14: 'Images/Winston_Lights_Rim.jpg',
+        24: 'Images/San_Marino_Flat.jpg',
+        25: 'Images/Normal_San_Marino.jpg',
+        26: 'Images/Tuna_Small.png',
+        27: 'Images/Century_Tuna.jpg',
+        28: 'Images/Saba_Squid.jpg',
+        29: 'Images/Mixed_Fruit.jpg',
+        30: 'Images/Soy_Suave_Pack.png',
+        31: 'Images/Soy_Sauce_Small.png',
+        32: 'Images/Soy_Sauce_Big.jpeg',
+        33: 'Images/Soy_Sauce_Gallon.jpeg',
+        34: 'Images/Vinegar_Pack.jpg',
+        35: 'Images/Vinegar_Small.png',
+        36: 'Images/Vinegar_Big.webp',
+        37: 'Images/Vinegar_Gallon.jpeg',
+        38: 'Images/Silver_Swan_Soy_Pack.jpeg',
+        39: 'Images/Silver_Swan_Soy_Small.webp',
+        40: 'Images/Silver_Swan_Soy_Large.png',
+        41: 'Images/Silver_Swan_Soy_Gallon.jpg',
+        42: 'Images/Silver_Swan_Pack.jpeg',
+        43: 'Images/Silver_Swan_Small.png',
+        44: 'Images/Silwer_Swan_Small.webp',
+        45: 'Images/Silver_Swan_Gallon.jpg',
+        47: 'Images/Ground_Pepper.jpg',
+        48: 'Images/Laurel.webp',
+        49: 'Images/Iodized_Salt.jpg',
+        76: 'Images/Pineapple_Juice.jpg',
+        53: 'Images/Maya_Cake_Flour.jpg',
+        54: 'Images/Baking_Soda.jpg',
+        55: 'Images/Cream_Pure_Cornstrach.webp',
+        64: 'Images/Milo.png',
+        65: 'Images/Energen.jpeg',
+        66: 'Images/Kopiko.jpg',
+        67: 'Images/Great_Taste.jpeg',
+        50: 'Images/Victoria_Sugar.jpg',
+        51: 'Images/Victoria_Brown_Sugar.jpg',
+        52: 'Images/Victoria_Washed_Sugar.jpg',
+        56: 'Images/Local_Cooking_Oil.jpg',
+        58: 'Images/Golden_Fiesta_Oil.webp',
+        59: 'Images/Lucky_Me_Pancit_Canton.jpeg',
+        60: 'Images/Extra_Big_Pancit_Canton.jpg',
+        61: 'Images/Nissin_Ramen.jpeg',
+        62: 'Images/Lucky_Me_Chicken.jpeg',
+        63: 'Images/Lucky_Me_Beef.jpeg',
+        68: 'Images/Alaska_Evaporated.jpg',
+        69: 'Images/Alaska_Condensada.jpg',
+        70: 'Images/Cow_Bell_Evaporated.png',
+        71: 'Images/Cow_Bell_Evaporated.png',
+        72: 'Images/Cow_Bell_Evaporated.png',
+        73: 'Images/Cowbell_Consedensarap.jpg',
+        74: 'Images/Cowbell_Consedensarap.jpg',
+        75: 'Images/Cowbell_Consedensarap.jpg',
+        80: 'Images/Colgate_Big.jpg',
+        81: 'Images/Colgate_Pack.jpg',
+        82: 'Images/Colgate_Twinpack.jpeg',
+        83: 'Images/Hapee_Big.jpg',
+        84: 'Images/Hapee_Big.webp',
+        85: 'Images/Close_Up_Big.jpg',
+        87: 'Images/Close_Up_Twinpack.jpeg',
+        88: 'Images/Oralb_Toothbrush.jpg',
+        89: 'Images/Palmolive_Shampoo.webp',
+        90: 'Images/Pantene_Shampoo.webp',
+        91: 'Images/Clear_Shampoo.webp',
+        92: 'Images/Silka_Soap.jpg',
+        93: 'Images/Kojic_Soap.jpg',
+        94: 'Images/Safegaurd_Small.webp',
+        95: 'Images/Safegaurd_Large.jpg',
+        96: 'Images/Dove_Large.jpg',
+        97: 'Images/Tide_Powder.webp',
+        98: 'Images/Champion_Powder.jpg',
+        99: 'Images/Surf_Powder.webp',
+        100: 'Images/Breeze_Powder.webp',
+        101: 'Images/Ariel_Powder.webp',
+        102: 'Images/Champion_Bar_Soap.png',
+        103: 'Images/Charcoal_Pack.jpg',
+        104: 'Images/Bilao_12.png',
+        105: 'Images/Bilao_14.png',
+        106: 'Images/Bilao_16.png',
+        107: 'Images/Bilao_18.png',
+        108: 'Images/Ginebra_Bottle.jpg',
+        109: 'Images/Ginebra_Box.jpg',
+        110: 'Images/Empirador_Single.jpg',
+        111: 'Images/Empirador_Double.jpg',
+        112: 'Images/Alfonso_Single.jpg',
+        113: 'Images/Alfonso_Box.jpg',
+        114: 'Images/Fundador_Specia.webp',
+        15: 'Images/Tupperware_Small.png',
+        16: 'Images/Tupperware_Medium.png',
+        17: 'Images/Tupperware_Large.png',
+        18: 'Images/Plastic_Labo.jpeg',
+        19: 'Images/Plastic_Labo.jpeg',
+        20: 'Images/Plastic_Bag.jpg',
+        21: 'Images/Plastic_Bag.jpg',
+        22: 'Images/Plastic_Bag.jpg',
+        77: 'Images/Food_Coloring.jpg',
+        78: 'Images/Gelatin_Mix.jpg',
+        79: 'Images/Graham_Crackers.webp',
+        57: 'Images/Extra_Virgin_Olive_Oil.png',
+        86: 'Images/Close_Up_Big.jpg',
     };
 
-    itemsToDisplay.forEach(item => {
-        let card = document.createElement('div');
-        card.className = 'product-card';
-        const imagePath = productImagePaths[item.id] || `images/${item.id}.jpg`;
+    displayProducts.forEach(product => {
+        let productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        const productImagePath = productImages[product.id] || `images/${product.id}.jpg`;
 
-        card.innerHTML = `
-            <img src="${imagePath}" alt="${item.name}" class="product-image${item.id === 57 ? ' olive-oil-image' : ''}" onerror="this.onerror=null; this.src='images/Front_Store_Image.jpg';">
-            <h4 style="margin:5px 0; color:#2d5a27;">${item.name}</h4>
-            <p style="margin:2px 0; font-size:12px; color:#555;">Category: <strong>${item.category}</strong></p>
-            <p style="margin:2px 0; font-size:13px; color:#2d5a27;"><strong>₱${item.price.toFixed(2)}</strong> / ${item.unit}</p>
-            <p style="margin:2px 0; font-size:12px; color:#777;">Stock: ${item.stock}</p>
+        productCard.innerHTML = `
+            <img src="${productImagePath}" alt="${product.name}" class="product-image${product.id === 57 ? ' olive-oil-image' : ''}" onerror="this.onerror=null; this.src='images/default.jpg';">
+            <h4 style="margin:5px 0; color:#2d5a27;">${product.name}</h4>
+            <p style="margin:2px 0; font-size:12px; color:#555;">Category: <strong>${product.category}</strong></p>
+            <p style="margin:2px 0; font-size:13px; color:#2d5a27;"><strong>₱${product.price.toFixed(2)}</strong> / ${product.unit}</p>
+            <p style="margin:2px 0; font-size:12px; color:#777;">Stock: ${product.stock}</p>
         `;
-        grid.appendChild(card);
+        productGrid.appendChild(productCard);
     });
 }
 
-function addNewItem(event) {
-    event.preventDefault();
-    let name = document.getElementById('itemName').value.trim();
-    let category = document.getElementById('itemCategory').value;
-    let price = parseFloat(document.getElementById('itemPrice').value);
-    let unit = document.getElementById('itemUnit').value.trim();
-    let stock = parseInt(document.getElementById('itemStock').value);
+function addNewItem(formEvent) {
+    formEvent.preventDefault();
+    let productName = document.getElementById('itemName').value.trim();
+    let productCategory = document.getElementById('itemCategory').value;
+    let productPrice = parseFloat(document.getElementById('itemPrice').value);
+    let productUnit = document.getElementById('itemUnit').value.trim();
+    let productStock = parseInt(document.getElementById('itemStock').value);
 
-    if (name && category && !isNaN(price) && unit && !isNaN(stock)) {
-        let newId = catalogItems.length > 0 ? catalogItems[catalogItems.length - 1].id + 1 : 1;
-        catalogItems.push({ id: newId, name, category, price, unit, stock });
-        localStorage.setItem('denis_catalog', JSON.stringify(catalogItems));
-        alert(`Successfully added "${name}"!`);
+    if (productName && productCategory && !isNaN(productPrice) && productUnit && !isNaN(productStock)) {
+        let newProductId = productList.length > 0 ? productList[productList.length - 1].id + 1 : 1;
+        productList.push({ id: newProductId, name: productName, category: productCategory, price: productPrice, unit: productUnit, stock: productStock });
+        localStorage.setItem('denis_catalog', JSON.stringify(productList));
+        alert(`Successfully added "${productName}"!`);
         document.getElementById('addItemForm').reset();
     }
 }
 
-function handleContact(event) {
-    event.preventDefault();
-    let name = document.getElementById('cName').value.trim();
-    let email = document.getElementById('cEmail').value.trim();
-    let message = document.getElementById('cMsg').value.trim();
+function handleContact(formEvent) {
+    formEvent.preventDefault();
+    let customerName = document.getElementById('cName').value.trim();
+    let customerEmail = document.getElementById('cEmail').value.trim();
+    let customerMessage = document.getElementById('cMsg').value.trim();
 
-    let newMessage = {
+    let messageDetails = {
         id: Date.now(),
-        name: name,
-        email: email,
-        message: message,
+        name: customerName,
+        email: customerEmail,
+        message: customerMessage,
         date: new Date().toLocaleString()
     };
 
-    customerMessages.push(newMessage);
-    localStorage.setItem('denis_messages', JSON.stringify(customerMessages));
+    customerMessages.push(messageDetails);
+    localStorage.setItem('dennis_messages', JSON.stringify(customerMessages));
 
-    document.getElementById('contactFeedback').textContent = `Thank you, ${name}! Your message has been sent to the store admin.`;
+    document.getElementById('contactFeedback').textContent = `Thank you, ${customerName}! Your message has been sent to the store admin.`;
     document.getElementById('contactForm').reset();
 }
 
 function renderInboxMessages() {
-    const container = document.getElementById('messagesContainer');
-    const badgeCount = document.getElementById('inboxCount');
+    const messagesContainer = document.getElementById('messagesContainer');
+    const inboxCounter = document.getElementById('inboxCount');
     
-    badgeCount.textContent = customerMessages.length;
-    container.innerHTML = "";
+    inboxCounter.textContent = customerMessages.length;
+    messagesContainer.innerHTML = "";
 
     if (customerMessages.length === 0) {
-        container.innerHTML = "<p style='color: #777;'>No messages or customer feedback received yet.</p>";
+        messagesContainer.innerHTML = "<p style='color: #777;'>No messages or customer feedback received yet.</p>";
         return;
     }
 
-    [...customerMessages].reverse().forEach(msg => {
-        let msgBox = document.createElement('div');
-        msgBox.style.cssText = "background: #faf7f2; border: 1px solid #dcd6cd; padding: 15px; border-radius: 6px;";
-        msgBox.innerHTML = `
+    [...customerMessages].reverse().forEach(customerMessage => {
+        let messageBox = document.createElement('div');
+        messageBox.style.cssText = "background: #faf7f2; border: 1px solid #dcd6cd; padding: 15px; border-radius: 6px;";
+        messageBox.innerHTML = `
             <div style="display: flex; justify-content: space-between; font-size: 13px; color: #555; margin-bottom: 5px;">
-                <span>From: <strong>${msg.name}</strong> (${msg.email})</span>
-                <span>${msg.date}</span>
+                <span>From: <strong>${customerMessage.name}</strong> (${customerMessage.email})</span>
+                <span>${customerMessage.date}</span>
             </div>
-            <p style="margin: 0; color: #2b2b2b; font-size: 14px;">${msg.message}</p>
-            <button onclick="deleteMessage(${msg.id})" style="margin-top: 10px; background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete</button>
+            <p style="margin: 0; color: #2b2b2b; font-size: 14px;">${customerMessage.message}</p>
+            <button onclick="deleteMessage(${customerMessage.id})" style="margin-top: 10px; background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete Message</button>
         `;
-        container.appendChild(msgBox);
+        messagesContainer.appendChild(messageBox);
     });
 }
 
-function deleteMessage(id) {
-    customerMessages = customerMessages.filter(m => m.id !== id);
-    localStorage.setItem('denis_messages', JSON.stringify(customerMessages));
+function deleteMessage(messageId) {
+    customerMessages = customerMessages.filter(customerMessage => customerMessage.id !== messageId);
+    localStorage.setItem('dennis_messages', JSON.stringify(customerMessages));
     renderInboxMessages();
 }
 
